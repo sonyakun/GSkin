@@ -50,4 +50,4 @@ def read_item(mcid: str):
         return {"status": 500, "message": "internal server error", "error": e}
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8080)
+    uvicorn.run(app, port=80)
