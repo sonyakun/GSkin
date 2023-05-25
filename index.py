@@ -1,10 +1,6 @@
-from typing import Union
 import httpx, base64, json
 from fastapi import FastAPI, Depends
 import uvicorn
-import redis.asyncio as redis
-from fastapi_limiter import FastAPILimiter
-from fastapi_limiter.depends import RateLimiter
 
 description = """
 GSkin is an API that simplifies the process of obtaining skin URLs from api.geysermc.org.
@@ -26,11 +22,11 @@ app = FastAPI(
 )
 
 @app.get("/decode/{b64_encoded}", description="base64 decoder")
-def read_root(b64_encoded: bytes):
+def base64_decode(b64_encoded: bytes):
     return {"status": 200, "content": json.loads(base64.b64decode(b64_encoded).decode())}
 
 @app.get("/skin/{mcid}", description="get bedrock skin")
-def read_item(mcid: str):
+def get_bedrock_skin(mcid: str):
     try:
         r1 = httpx.get(f"https://api.geysermc.org/v2/xbox/xuid/{mcid}")
         r1_json = r1.json()
